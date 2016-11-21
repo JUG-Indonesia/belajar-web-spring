@@ -1,0 +1,51 @@
+<html xmlns:th="http://www.thymeleaf.org" 
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" 
+layout:decorator="layout/index">
+<head>
+	<title>Belajar Spring Web</title>
+	<script language="JavaScript">
+	    $(document).ready(function(){
+	        $(".remove-data").each(function(){
+	            $(this).click(function(){
+	                if(confirm('Data will be deleted?')) return true;
+	                return false;
+	            });
+	        });
+	    });
+	</script>	
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="box">
+		  <div class="box-header with-border">
+		    <h3 class="box-title">Daftar Rekening kelolaan</h3>
+		  </div>
+		  <!-- /.box-header -->
+		  <div class="box-body">
+		    <table class="table table-bordered">
+		      <thead>
+			      <tr>
+			      	<th>Username</th>
+			      	<th>Status</th>
+			      	<th>Role</th>
+			      	<th>Edit</th>
+			      </tr>
+	      	</thead>
+		      <tbody>
+			      <tr th:each="row : ${data}">
+			      	<td th:text="${row.username}"></td>		      
+			      	<td th:text="${row.active}"></td>		      
+			      	<td th:text="${row.roles}"></td>		      
+			      	<td>
+			      		<a href="#" th:href="@{/user/edit/{id}(id=${row.id})}" title="edit record"><span class="glyphicon glyphicon-edit"></span></a>
+			      		<a href="#" th:href="@{/user/delete/{id}(id=${row.id})}" title="delete record"><span class="glyphicon glyphicon-remove-circle remove-data"></span></a>
+			      	</td>
+			      </tr>
+	      	</tbody>
+	      </table>
+	      <div class="col-sm-5" th:include="layout/paging :: paginationbar"></div>
+		  </div>
+		</div>
+	</div>
+</body>
+</html>
